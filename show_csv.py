@@ -16,7 +16,7 @@ def loadData(fname):
 
 
 data=loadData('data.csv')
-data.plot()
+data.bar()
 # fig = pyplot.figure()
 # ax = fig.add_subplot(111)
 # ax.set_xticks(data)
