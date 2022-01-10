@@ -6,13 +6,13 @@ Created on Wed Jan  5 21:54:37 2022
 @author: minas
 """
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
 
 def loadData(fname):
     data=pd.read_csv(fname,header=0, index_col=0, parse_dates=True, squeeze=True)
     return data
-
-
 
 
 data=loadData('data.csv')
@@ -25,3 +25,5 @@ data.plot()
 # Hello
 
 #   data.show()
+plt.show()
+
