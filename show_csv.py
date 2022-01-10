@@ -21,6 +21,8 @@ data=loadData('data.csv')
 # ax = fig.add_subplot(111)
 # ax.set_xticks(data)
 # ax.set_xticklabels(data.index.strftime('%Y-%m-%d %H:%M:%S'),rotation=40)
+# Hello
+# Hello
 
 data.bar()
 pyplot.show()
