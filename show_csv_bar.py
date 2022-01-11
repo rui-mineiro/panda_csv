@@ -12,5 +12,6 @@ import matplotlib.pyplot as plt
 data=pd.read_csv('data.csv')
 X = list(data.iloc[:, 0])
 Y = list(data.iloc[:, 1])
-plt.bar(X, Y, color='g')
+plt.bar(X, Y, color='g', align='edge')
 plt.show()
+

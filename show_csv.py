@@ -7,23 +7,31 @@ Created on Wed Jan  5 21:54:37 2022
 """
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as dl
 
+
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.gca.html
+# plt.get_fignums()
+
+data=pd.read_csv('data.csv')
 fig, ax = plt.subplots()
+xtime=dl.date2num(data.iloc[:, 0])
+ax.set_xticks(xtime)
+border=(max(xtime)-max(xtime))*0.05
+xlmax=min(xtime)-border
+xlmin=max(xtime)+border
+ax.set_xlim(left=xlmax , right=xlmin)
 
-def loadData(fname):
-    data=pd.read_csv(fname,header=0, index_col=0, parse_dates=True, squeeze=True)
-    return data
 
 
-data=loadData('data.csv')
-data.bar()
-# fig = pyplot.figure()
-# ax = fig.add_subplot(111)
-# ax.set_xticks(data)
+
+# data.plot()
+
+# ax.set_xticks(data.iloc[:, 0])
+
 # ax.set_xticklabels(data.index.strftime('%Y-%m-%d %H:%M:%S'),rotation=40)
-# Hello
-# Hello
+# ax.set_xticklabels(data.index.strftime('%Y-%m-%d %H:%M:%S'))
 
-#   data.show()
-plt.show()
+# plt.show()
+
 
