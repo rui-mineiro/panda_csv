@@ -19,7 +19,6 @@ data=data.sort_index()
 data['MOUNT']=data.cumsum(axis=0)
 data.drop('VALUE', axis=1, inplace=True)
 data['MOUNT']=data['MOUNT']-data['MOUNT'].min()
-# data['MOUNT']=data['MOUNT']-2
 
 fig, ax = plt.subplots()
 xtime=dl.date2num(data.index)
@@ -42,6 +41,8 @@ plt.step(xtime,data.iloc[:,0])
 # ax.set_xticklabels(data.index.strftime('%Y-%m-%d %H:%M:%S'),rotation=40)
 # ax.set_xticklabels(data.index.strftime('%Y-%m-%d %H:%M:%S'))
 
-# plt.show()
+plt.show()
+
+# head  -500 data2_original.csv > data2.csv ; ./show_csv.py
 
 
