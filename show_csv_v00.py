@@ -16,20 +16,20 @@ import matplotlib.dates as dl
 data=pd.read_csv('data.csv',index_col=0, parse_dates=True)
 
 fig, ax = plt.subplots()
-xtime=dl.date2num(data.index)
-ax.set_xticks(xtime)
-border=(max(xtime)-min(xtime))*0.05
-xlmin=min(xtime)-border
-xlmax=max(xtime)+border
-ax.set_xlim(left=xlmin , right=xlmax)
-ax.set_xticklabels(data.index,rotation=90)
-plt.step(xtime,data.iloc[:,0])
+# xtime=dl.date2num(data.index)
+# ax.set_xticks(xtime)
+# border=(max(xtime)-min(xtime))*0.05
+# xlmax=min(xtime)-border
+# xlmin=max(xtime)+border
+# ax.set_xlim(left=xlmin , right=xlmax)
+# ax.set_xticklabels(data.index,rotation=90)
 
 
 
 
 
-# data.plot()
+data.plot()
+
 
 # ax.set_xticks(data.iloc[:, 0])
 
