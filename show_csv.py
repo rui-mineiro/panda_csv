@@ -13,7 +13,13 @@ import matplotlib.dates as dl
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.gca.html
 # plt.get_fignums()
 
-data=pd.read_csv('data.csv',index_col=0, parse_dates=True)
+# data=pd.read_csv('data.csv',index_col=0, parse_dates=True)
+data=pd.read_csv('data2.csv',index_col=0, parse_dates=True)
+data=data.sort_index()
+data['MOUNT']=data.cumsum(axis=0)
+data.drop('VALUE', axis=1, inplace=True)
+data['MOUNT']=data['MOUNT']-data['MOUNT'].min()
+# data['MOUNT']=data['MOUNT']-2
 
 fig, ax = plt.subplots()
 xtime=dl.date2num(data.index)
@@ -22,7 +28,7 @@ border=(max(xtime)-min(xtime))*0.05
 xlmin=min(xtime)-border
 xlmax=max(xtime)+border
 ax.set_xlim(left=xlmin , right=xlmax)
-ax.set_xticklabels(data.index,rotation=90)
+# ax.set_xticklabels(data.index,rotation=90)
 plt.step(xtime,data.iloc[:,0])
 
 
