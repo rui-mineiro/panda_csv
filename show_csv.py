@@ -22,11 +22,17 @@ data['MOUNT']=data['MOUNT']-data['MOUNT'].min()
 
 fig, ax = plt.subplots()
 xtime=dl.date2num(data.index)
-ax.set_xticks(xtime)
-border=(max(xtime)-min(xtime))*0.05
-xlmin=min(xtime)-border
-xlmax=max(xtime)+border
-ax.set_xlim(left=xlmin , right=xlmax)
+
+weeks     = dl.WeekdayLocator(byweekday=6)
+weeks_fmt = dl.DateFormatter('%Y-%m-%d %H:%M:%S')
+
+ax.xaxis.set_major_locator(weeks)
+ax.xaxis.set_major_formatter(weeks_fmt)
+# ax.set_xticks(xtime)
+# border=(max(xtime)-min(xtime))*0.05
+# xlmin=min(xtime)-border
+# xlmax=max(xtime)+border
+# ax.set_xlim(left=xlmin , right=xlmax)
 # ax.set_xticklabels(data.index,rotation=90)
 plt.step(xtime,data.iloc[:,0])
 
