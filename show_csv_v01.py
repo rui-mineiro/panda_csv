@@ -8,6 +8,7 @@ Created on Wed Jan  5 21:54:37 2022
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as dl
+from matplotlib.widgets import Slider
 
 
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.gca.html
@@ -21,15 +22,26 @@ data.drop('VALUE', axis=1, inplace=True)
 data['MOUNT']=data['MOUNT']-data['MOUNT'].min()
 
 fig, ax = plt.subplots()
+# ax_slide = plt.axes([0.25, 0.1, 0.65, 0.03])
+# s_factor = Slider(ax_slide, 'Smoothing factor',0.1, 6, valinit=6, valstep=0.2)
+
 xtime=dl.date2num(data.index)
 
-weeks     = dl.WeekdayLocator(byweekday=6)
-weeks_fmt = dl.DateFormatter('%Y-%m-%d %H:%M:%S')
+# weeks     = dl.WeekdayLocator(byweekday=6)
+# weeks_fmt = dl.DateFormatter('%Y-%m-%d %H:%M:%S')
 
-ax.xaxis.set_major_locator(weeks)
-ax.xaxis.set_major_formatter(weeks_fmt)
-for label in ax.get_xticklabels(which='major'):
-    label.set(rotation=90)
+# ax.xaxis.set_major_locator(weeks)
+# ax.xaxis.set_major_formatter(weeks_fmt)
+# for label in ax.get_xticklabels(which='major'):
+#     label.set(rotation=90)
+
+locator = dl.AutoDateLocator(minticks=3, maxticks=6)
+formatter = dl.ConciseDateFormatter(locator)
+ax.xaxis.set_major_locator(locator)
+ax.xaxis.set_major_formatter(formatter)
+# ax.xaxis.set_minor_locator(locator)
+# ax.xaxis.set_minor_formatter(formatter)
+
 # ax.set_xticks(xtime)
 # border=(max(xtime)-min(xtime))*0.05
 # xlmin=min(xtime)-border
