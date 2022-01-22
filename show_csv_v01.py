@@ -22,25 +22,46 @@ data.drop('VALUE', axis=1, inplace=True)
 data['MOUNT']=data['MOUNT']-data['MOUNT'].min()
 
 fig, ax = plt.subplots()
-# ax_slide = plt.axes([0.25, 0.1, 0.65, 0.03])
-# s_factor = Slider(ax_slide, 'Smoothing factor',0.1, 6, valinit=6, valstep=0.2)
 
-xtime=dl.date2num(data.index)
 
-# weeks     = dl.WeekdayLocator(byweekday=6)
-# weeks_fmt = dl.DateFormatter('%Y-%m-%d %H:%M:%S')
+iloc_start=100
+iloc_end=5000
+num_weeks=2
 
-# ax.xaxis.set_major_locator(weeks)
-# ax.xaxis.set_major_formatter(weeks_fmt)
+
+x=dl.date2num(data.index[iloc_start:iloc_end])
+y=data.iloc[iloc_start:iloc_end,0]
+
+
 # for label in ax.get_xticklabels(which='major'):
 #     label.set(rotation=90)
 
-locator = dl.AutoDateLocator(minticks=3, maxticks=6)
+locator = dl.AutoDateLocator(minticks=1, maxticks=10)
+# locator.intervald[DAILY] = [1]
 formatter = dl.ConciseDateFormatter(locator)
-ax.xaxis.set_major_locator(locator)
-ax.xaxis.set_major_formatter(formatter)
-# ax.xaxis.set_minor_locator(locator)
-# ax.xaxis.set_minor_formatter(formatter)
+# ax.xaxis.set_major_locator(locator)
+# ax.xaxis.set_major_formatter(formatter)
+
+weeks     = dl.WeekdayLocator(byweekday=6)
+weeks_fmt = dl.DateFormatter('%a, %d %b')
+
+days     = dl.DayLocator()
+days_fmt = dl.DateFormatter('%a')
+
+ax.xaxis.set_major_locator(weeks)
+ax.xaxis.set_major_formatter(weeks_fmt)
+
+
+ax.xaxis.set_minor_locator(days)
+ax.xaxis.set_minor_formatter(days_fmt)
+
+
+# plt.xticks(rotation=90)
+ax.tick_params(axis="x", which="both", rotation=90)
+
+# plt.grid(which="major", axis="x")
+
+
 
 # ax.set_xticks(xtime)
 # border=(max(xtime)-min(xtime))*0.05
@@ -48,14 +69,12 @@ ax.xaxis.set_major_formatter(formatter)
 # xlmax=max(xtime)+border
 # ax.set_xlim(left=xlmin , right=xlmax)
 # ax.set_xticklabels(data.index,rotation=90)
-plt.step(xtime,data.iloc[:,0])
+plt.step(x,y)
 
-
-
-
+ax_slide = plt.axes([0.25, 0.1, 0.65, 0.03])
+s_factor = Slider(ax_slide, 'Smoothing factor',0.1, 6, valinit=6, valstep=0.2)
 
 # data.plot()
-
 # ax.set_xticks(data.iloc[:, 0])
 
 # ax.set_xticklabels(data.index.strftime('%Y-%m-%d %H:%M:%S'),rotation=40)
