@@ -9,7 +9,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as dl
 from matplotlib.widgets import Slider
-from matplotlib.widgets import RangeSlider
 
 
 data=pd.read_csv('data2.csv',index_col=0, parse_dates=True)
@@ -48,8 +47,7 @@ ax.tick_params(axis="x", which="both", rotation=90)
 plt.step(x,y)
 
 ax_slide = plt.axes([0.20, 0.1, 0.60, 0.03])
-slider = RangeSlider(ax_slide, "Period", x.min(), x.max())
-# slider = Slider(ax_slide, "Period", x.min(), x.max(),1)
+slider = Slider(ax_slide, "Period", x.min(), x.max(),valinit=x.max())
 
 
 
