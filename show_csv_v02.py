@@ -46,9 +46,17 @@ ax.tick_params(axis="x", which="both", rotation=90)
 
 plt.step(x,y)
 
+<<<<<<< HEAD
 ax_slide = plt.axes([0.20, 0.1, 0.60, 0.03])
 slider = Slider(ax_slide, "Period", x.min(), x.max(),valinit=x.max())
+=======
+slide_start = plt.axes([0.20, 0.1 , 0.60, 0.03])
+slide_end   = plt.axes([0.20, 0   , 0.60, 0.03])
+>>>>>>> 7be160101936724dac7ad5dcb0e7d1ab6b5a3855
 
+# slider = RangeSlider(ax_slide, "Period", x.min(), x.max())
+slider_start = Slider(slide_start, "Start" , 15 , 30 , valinit=20 )
+slider_end   = Slider(slide_end  , "End"   , 15 , 30 , valinit=20 )
 
 
 plt.show()
