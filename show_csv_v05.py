@@ -20,16 +20,18 @@ data_csv['MOUNT']=data_csv['MOUNT']-data_csv['MOUNT'].min()
 
 data=data_csv
 idx_str=0
-idx_end=data.size-1
+idx_end=data_csv.size-1
 day_start=0
 day_delta=data_csv.index[idx_end]-data.index[idx_str]
 day_end=day_delta.days
 
 
 def set_data(day_str,day_end):
-    str_date = data_csv.index[0]+day_str
-    end_date = data_csv.index[0]+day_end
-    data=(data_csv.index > str_date) & (data_csv.index <= end_date)
+    # str_date = data_csv.index[0]+day_str
+    str_date = data_csv.index[0]+timedelta(days=day_str)
+    end_date = data_csv.index[0]+timedelta(days=day_end)
+    mask=(data_csv.index > str_date) & (data_csv.index <= end_date)
+    data=data_csv.loc[mask]
     return data
 
 
@@ -70,8 +72,7 @@ slider_start = Slider(slide_start, "Start" , day_start , day_end , valinit=0 )
 slider_end   = Slider(slide_end  , "End"   , day_start , day_end , valinit=20 )
 
 def update(val):
-    idx_str=slider_start.val
-    idx_end=slider_end.val
+    data=set_data(slider_start.val,slider_end.val)
     line.set_xdata(x(idx_str,idx_end,data))
     line.set_ydata(y(idx_str,idx_end,data))
     fig.canvas.draw_idle()
