@@ -14,7 +14,11 @@ def set_data(day_str,day_end):
     return data
 
 def update_str(val):
-    if slider_end.val < ( slider_start.val + 1 ) :
+    if slider_start.val > (slider_end.val - 1):
+       if slider_start.val > day_end - 1  :
+        slider_end.set_val(day_end)
+        slider_start.set_val(day_end-1)            
+       else:
         slider_end.set_val(slider_start.val + 1)
     data=set_data(slider_start.val,slider_end.val)
     x=dl.date2num(data.index)
@@ -25,7 +29,11 @@ def update_str(val):
     fig.canvas.draw_idle()
 
 def update_end(val):
-    if slider_start.val > ( slider_end.val - 1 ) :
+    if slider_end.val < (slider_start.val + 1):
+       if slider_end.val < day_start + 1  :
+        slider_start.set_val(day_start)
+        slider_end.set_val(day_start+1)            
+       else:
         slider_start.set_val(slider_end.val - 1)
     data=set_data(slider_start.val,slider_end.val)
     x=dl.date2num(data.index)
