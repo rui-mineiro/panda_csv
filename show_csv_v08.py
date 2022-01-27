@@ -71,7 +71,7 @@ def resetData(event):
 
 fig, ax = plt.subplots(1, 1, figsize=(10, 5))
 
-data_csv=pd.read_csv('data2.csv',index_col=0, parse_dates=True)
+data_csv=pd.read_csv('data2.csv',index_col=0, parse_dates=True,names=('DATE', 'VALUE'))
 data_csv=data_csv.sort_index()
 data_csv['MOUNT']=data_csv.cumsum(axis=0)
 data_csv.drop('VALUE', axis=1, inplace=True)
