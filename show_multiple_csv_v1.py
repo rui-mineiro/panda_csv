@@ -75,30 +75,30 @@ data_csv=data_csv.sort_index()
 activity = data_csv['ACTIVITY'].unique()
 data_csv[activity]=activity
 mask=data_csv[activity].eq(data_csv['ACTIVITY'], axis=0)
-data_csv[activity]=data_csv[activity].where(mask, other=0)
+data_csv[activity]=data_csv[activity].where( mask, other=0)
 data_csv[activity]=data_csv[activity].where(~mask, other=data_csv['VALUE'],axis=0)
+data_csv.drop('VALUE'   , axis=1, inplace=True)
+data_csv.drop('ACTIVITY', axis=1, inplace=True)
+data_csv[activity]=data_csv[activity].cumsum()
+
+day_start=0
+day_delta=data_csv.index[-1]-data_csv.index[0]
+day_end=day_delta.days
 
 
-# data_csv[activity]=data_csv['ACTIVITY'].where(~mask, other=0)
+data=set_data(day_start,day_end)
+
+# data.plot.area()
+
+x=dl.date2num(data.index)
+w=range(1,18)
+r=[ [1,4,6,8,9], [2,2,7,10,12], [2,8,5,10,6] ]
+y=data.T.values.tolist()
+
+ax.stackplot( x ,y )
 
 
-
-
-# data_csv[activity]=data_csv.cumsum()
-
-# data_csv['MOUNT']=data_csv.cumsum(axis=0)
-# data_csv.drop('VALUE', axis=1, inplace=True)
-# data_csv['MOUNT']=data_csv['MOUNT']-data_csv['MOUNT'].min()
-# day_start=0
-# day_delta=data_csv.index[-1]-data_csv.index[0]
-# day_end=day_delta.days
-
-
-
-# data=set_data(day_start,day_end)
-# x=dl.date2num(data.index)
-# y=data.iloc[:,0]
-# line,= plt.step(x,y)
+# # line,= plt.step(x,y)
 # ax.set_xlim([data.index[0],data.index[-1]])
 # plt.subplots_adjust(bottom=0.35)
 
