@@ -99,28 +99,30 @@ ax.stackplot( x ,y , labels=activity.tolist())
 ax.legend(loc='upper left')
 
 # # line,= plt.step(x,y)
-# ax.set_xlim([data.index[0],data.index[-1]])
-# plt.subplots_adjust(bottom=0.35)
+
+ax.set_xlim([data.index[0],data.index[-1]])
+ax.set_ylim([0,1000])
+plt.subplots_adjust(bottom=0.35)
 
 
 
-# ax.tick_params(axis="x", which="both", rotation=90)
-# ax.grid(which='minor', alpha=0.2)
-# ax.grid(which='major', alpha=0.5)
+ax.tick_params(axis="x", which="both", rotation=90)
+ax.grid(which='minor', alpha=0.2)
+ax.grid(which='major', alpha=0.5)
 
-# slide_start = plt.axes([0.20, 0.1   , 0.60, 0.03])
-# slide_end   = plt.axes([0.20, 0.05  , 0.60, 0.03])
+slide_start = plt.axes([0.20, 0.1   , 0.60, 0.03])
+slide_end   = plt.axes([0.20, 0.05  , 0.60, 0.03])
 
-# slider_start = Slider(slide_start, "Start" , day_start , day_end , valinit=0 )
-# slider_end   = Slider(slide_end  , "End"   , day_start , day_end , valinit=day_end )
+slider_start = Slider(slide_start, "Start" , day_start , day_end , valinit=0 )
+slider_end   = Slider(slide_end  , "End"   , day_start , day_end , valinit=day_end )
 
-# resetax = plt.axes([0.85, 0.04, 0.1, 0.04])
-# button = Button(resetax, 'Reset', color='0.85',hovercolor='skyblue')
+resetax = plt.axes([0.85, 0.04, 0.1, 0.04])
+button = Button(resetax, 'Reset', color='0.85',hovercolor='skyblue')
 
 
-# slider_start.on_changed(update_str)
-# slider_end.on_changed(update_end)
-# button.on_clicked(resetData)
+slider_start.on_changed(update_str)
+slider_end.on_changed(update_end)
+button.on_clicked(resetData)
 
 plt.show()
 
