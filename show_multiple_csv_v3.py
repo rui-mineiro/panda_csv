@@ -36,10 +36,10 @@ def update_str(val):
         slider_end.set_val(slider_start.val + 1)
     data=set_data(slider_start.val,slider_end.val)
     x=dl.date2num(data.index)
-    y=data.iloc[:,0]
-    line.set_xdata(x)
-    line.set_ydata(y)
-    ax.set_xlim([data.index[0],data.index[-1]])
+    y=data.T.values.tolist()
+    ax.stackplot( x ,y , labels=activity.tolist())
+    # line.set_xdata(x)
+    # line.set_ydata(y)
     fig.canvas.draw_idle()
 
 def update_end(val):
@@ -51,9 +51,10 @@ def update_end(val):
         slider_start.set_val(slider_end.val - 1)
     data=set_data(slider_start.val,slider_end.val)
     x=dl.date2num(data.index)
-    y=data.iloc[:,0]
-    line.set_xdata(x)
-    line.set_ydata(y)
+    y=data.T.values.tolist()
+    ax.stackplot( x ,y , labels=activity.tolist())
+    # line.set_xdata(x)
+    # line.set_ydata(y)
     ax.set_xlim([data.index[0],data.index[-1]])
     fig.canvas.draw_idle()
 
@@ -70,7 +71,7 @@ def resetData(event):
 
 
 
-data_csv=pd.read_csv('data4.csv',index_col=0,parse_dates=True , dtype = {'VALUE':'float16'}, names=('DATE','VALUE','ACTIVITY'), sep='\t')
+data_csv=pd.read_csv('data6.csv',index_col=0,parse_dates=True , dtype = {'VALUE':'float16'}, names=('DATE','VALUE','ACTIVITY'))
 data_csv=data_csv.sort_index()
 activity = data_csv['ACTIVITY'].unique()
 data_csv[activity]=activity
@@ -87,44 +88,41 @@ day_delta=data_csv.index[-1]-data_csv.index[0]
 day_end=day_delta.days
 
 fig, ax = plt.subplots(1, 1, figsize=(10, 5) )
-
 data=set_data(day_start,day_end)
-
-
 x=dl.date2num(data.index)
 y=data.T.values.tolist()
 
-# ax.stackplot( x ,y , labels=activity.tolist())
-# ax.legend(loc='upper left')
 
 # # line,= plt.step(x,y)
+ax.stackplot( x ,y , labels=activity.tolist())
 
-# ax.set_xlim([data.index[0],data.index[-1]])
-# ax.set_ylim([0,1000])
-# plt.subplots_adjust(bottom=0.35)
-
-
-
-data.plot(kind='area',stacked=True)
+ax.set_xlim([data.index[0],data.index[-1]])
+ax.set_ylim([0,1000])
+plt.subplots_adjust(bottom=0.35)
 
 
-# ax.tick_params(axis="x", which="both", rotation=90)
-# ax.grid(which='minor', alpha=0.2)
-# ax.grid(which='major', alpha=0.5)
 
-# slide_start = plt.axes([0.20, 0.1   , 0.60, 0.03])
-# slide_end   = plt.axes([0.20, 0.05  , 0.60, 0.03])
+# data.plot(kind='area',stacked=True)
 
-# slider_start = Slider(slide_start, "Start" , day_start , day_end , valinit=0 )
-# slider_end   = Slider(slide_end  , "End"   , day_start , day_end , valinit=day_end )
+
+ax.tick_params(axis="x", which="both", rotation=90)
+ax.grid(which='minor', alpha=0.2)
+ax.grid(which='major', alpha=0.5)
+
+slide_start = plt.axes([0.20, 0.1   , 0.60, 0.03])
+slide_end   = plt.axes([0.20, 0.05  , 0.60, 0.03])
+
+slider_start = Slider(slide_start, "Start" , day_start , day_end , valinit=0 )
+slider_end   = Slider(slide_end  , "End"   , day_start , day_end , valinit=day_end )
 
 # resetax = plt.axes([0.85, 0.04, 0.1, 0.04])
 # button = Button(resetax, 'Reset', color='0.85',hovercolor='skyblue')
 
 
-# slider_start.on_changed(update_str)
-# slider_end.on_changed(update_end)
+slider_start.on_changed(update_str)
+slider_end.on_changed(update_end)
 # button.on_clicked(resetData)
 
+ax.legend(loc='upper left')
 plt.show()
 
