@@ -34,7 +34,7 @@ def update_str(val):
         slider_start.set_val(day_end-1)            
        else:
         slider_end.set_val(slider_start.val + 1)
-    data=set_data(slider_start.val,slider_end.val)    
+    data=set_data(slider_start.val,slider_end.val)
     # line.set_xdata(x)
     # line.set_ydata(y)
     ax.set_xlim([data.index[0],data.index[-1]])    
@@ -47,7 +47,7 @@ def update_end(val):
         slider_end.set_val(day_start+1)            
        else:
         slider_start.set_val(slider_end.val - 1)
-    data=set_data(slider_start.val,slider_end.val)    
+    data=set_data(slider_start.val,slider_end.val)
     # line.set_xdata(x)
     # line.set_ydata(y)
     ax.set_xlim([data.index[0],data.index[-1]])
@@ -64,13 +64,15 @@ data_csv[activity]=data_csv[activity].where( mask, other=0)
 data_csv[activity]=data_csv[activity].where(~mask, other=data_csv['VALUE'],axis=0)
 data_csv.drop('VALUE'   , axis=1, inplace=True)
 data_csv.drop('ACTIVITY', axis=1, inplace=True)
-data_csv[activity]=data_csv[activity].cumsum()
+data_csv[activity]=data_csv[activity].cumsum(axis=0)
+data_csv[activity]=data_csv[activity].cumsum(axis=1)
+# data_csv[activity]=data_csv[activity].cumsum(axis=0)
 
-data_csv.to_csv('data5.csv', index=True)
 
 day_start=0
 day_delta=data_csv.index[-1]-data_csv.index[0]
 day_end=day_delta.days
+
 
 fig, ax = plt.subplots(1, 1, figsize=(10, 5) )
 data=set_data(day_start,day_end)
@@ -78,16 +80,24 @@ x=dl.date2num(data.index)
 y=data.T.values.tolist()
 
 
-# # line,= plt.step(x,y)
-ax.stackplot( x ,y , labels=activity.tolist(),colors=['b','c','m','r','y','g','k'])
 
+
+# line,= plt.step(x,y)
+
+fcolor=['b','c','m','r','y','g','k']
+ax.fill_between(x, 0, y[0], facecolor='b', step='post',label=activity[0])
+lineNum=len(activity)
+if lineNum>1:
+    lineN=list(range(1,len(activity)))
+    fcolor=['c','m','r','y','g','k']
+    for n in lineN:
+     ax.fill_between(x, y[n-1], y[n], facecolor=fcolor[n], step='post',label=activity[n])
+
+
+ax.legend(loc='upper left')
 ax.set_xlim([data.index[0],data.index[-1]])
-ax.set_ylim([0,1000])
+# ax.set_ylim([0,1000])
 plt.subplots_adjust(bottom=0.35)
-
-
-
-# data.plot(kind='area',stacked=True)
 
 
 ax.tick_params(axis="x", which="both", rotation=90)
@@ -105,6 +115,5 @@ slider_end   = Slider(slide_end  , "End"   , day_start , day_end , valinit=day_e
 slider_start.on_changed(update_str)
 slider_end.on_changed(update_end)
 
-ax.legend(loc='upper left')
 plt.show()
 
