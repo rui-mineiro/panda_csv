@@ -1,0 +1,2 @@
+select TIMESTAMP , VALUE  , ACTIVITY from (select char(varchar_format(START_TIME,'YYYY-MM-DD HH24:MI:SS'),19) TIMESTAMP, 1 as VALUE  , ACTIVITY from summary where activity='TAPE MOUNT') UNION ALL (select char(varchar_format(END_TIME,'YYYY-MM-DD HH24:MI:SS'),19) TIMESTAMP, -1 as VALUE  , ACTIVITY  from summary where activity='TAPE MOUNT') order by 1
+

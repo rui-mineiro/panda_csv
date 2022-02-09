@@ -51,10 +51,13 @@ def update_end(val):
 
 
 
-data_csv=pd.read_csv('data7.csv',index_col=0,parse_dates=True , dtype = {'VALUE':'float16'}, names=('DATE','VALUE','ACTIVITY'), sep='\t')
+data_csv=pd.read_csv('data8.csv',index_col=0,parse_dates=True , dtype = {'VALUE':'float16'}, names=('DATE','VALUE','ACTIVITY'), sep='\t')
 data_csv=data_csv.sort_index()
 activity = data_csv['ACTIVITY'].unique()
-data_csv[activity]=activity
+if len(activity)==1: 
+  data_csv[activity]=activity[0]
+else:
+  data_csv[activity]=activity
 mask=data_csv[activity].eq(data_csv['ACTIVITY'], axis=0)
 data_csv[activity]=data_csv[activity].where( mask, other=0)
 data_csv[activity]=data_csv[activity].where(~mask, other=data_csv['VALUE'],axis=0)
